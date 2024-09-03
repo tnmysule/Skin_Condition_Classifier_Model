@@ -26,13 +26,14 @@ print()
 print()
 
 model_path = 'skin_model.h5'
-initial_epoch = 20
-epochs = 100
+initial_epoch = 100
+epochs = 200
 
 # Check if the model file exists
 if os.path.exists(model_path):
   # Load the model
   model = load_model(model_path)
+  model.compile(loss = tf.keras.losses.SparseCategoricalCrossentropy(), optimizer = tf.keras.optimizers.Adam(learning_rate = 0.0001), metrics = ['accuracy'])
   print("Model loaded successfully.")
 else:
   # If the model does not exist, define and train a new model
@@ -44,7 +45,7 @@ else:
   print()
   print()
 
-#hist, model = training(model, x_train, y_train, x_test,y_test, initial_epoch, epochs)
+hist, model = training(model, x_train, y_train, x_test,y_test, initial_epoch, epochs)
 print()
 print()
 print('training done')
@@ -52,13 +53,14 @@ print('training done')
 #performance_loss(hist)
 #performance_accuracy(hist)
 #visualise_images(x_test, y_test, class_names)
-#eval(x_test,y_test, model, class_names)
+eval(x_test,y_test, model, class_names)
 #print(f'Precision:{pre.result().numpy()},Recall:{re.result().numpy()}, Accuracy:{acc.result().numpy()}')
 
-image = 'test_images/rosacea2.jpg'
-target_size = (256,256)
+#image = 'test_images/rosacea2.jpg'
+#target_size = (256,256)
 
-testing(image, model, class_names, target_size)
 
-#model.save('skin_model.h5', include_optimizer=True)
+#testing(image, model, class_names, target_size)
+
+model.save('skin_model.h5', include_optimizer=True)
 
